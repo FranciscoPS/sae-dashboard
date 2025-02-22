@@ -1,4 +1,6 @@
 import { Card } from "@/components/Card";
+import { LineChartAxisLabelsExample } from "@/app/custom-components/LineChartAxisLabelsExample";
+import { AreaChartHero } from "./custom-components/AreaChartHero";
 
 export default function Home() {
   return (
@@ -18,6 +20,10 @@ export default function Home() {
           legacy as the greatest tennis player of all time.
         </p>
       </Card>
+
+      <LineChartAxisLabelsExample />
+
+      <AreaChartHero />
     </>
   );
 }
