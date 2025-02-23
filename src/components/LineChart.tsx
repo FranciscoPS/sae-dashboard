@@ -3,8 +3,8 @@
 
 "use client"
 
-import React from "react"
 import { RiArrowLeftSLine, RiArrowRightSLine } from "@remixicon/react"
+import React from "react"
 import {
   CartesianGrid,
   Dot,
