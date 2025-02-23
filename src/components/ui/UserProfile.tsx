@@ -50,7 +50,7 @@ function DropdownUserProfile() {
               className="flex size-8 shrink-0 items-center justify-center rounded-full border border-gray-300 bg-white text-xs font-medium text-gray-700 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300"
               aria-hidden="true"
             >
-              ES
+              FP
             </span>
           </button>
         </DropdownMenuTrigger>
@@ -58,10 +58,10 @@ function DropdownUserProfile() {
           align="end"
           className="!min-w-[calc(var(--radix-dropdown-menu-trigger-width))]"
         >
-          <DropdownMenuLabel>emma.stone@acme.com</DropdownMenuLabel>
+          <DropdownMenuLabel>francisco.peralta@saei.mx</DropdownMenuLabel>
           <DropdownMenuGroup>
             <DropdownMenuSubMenu>
-              <DropdownMenuSubMenuTrigger>Theme</DropdownMenuSubMenuTrigger>
+              <DropdownMenuSubMenuTrigger>Tema</DropdownMenuSubMenuTrigger>
               <DropdownMenuSubMenuContent>
                 <DropdownMenuRadioGroup
                   value={theme}
@@ -75,7 +75,7 @@ function DropdownUserProfile() {
                     iconType="check"
                   >
                     <RiSunLine className="size-4 shrink-0" aria-hidden="true" />
-                    Light
+                    Luz
                   </DropdownMenuRadioItem>
                   <DropdownMenuRadioItem
                     aria-label="Switch to Dark Mode"
@@ -86,7 +86,7 @@ function DropdownUserProfile() {
                       className="size-4 shrink-0"
                       aria-hidden="true"
                     />
-                    Dark
+                    Oscuro
                   </DropdownMenuRadioItem>
                   <DropdownMenuRadioItem
                     aria-label="Switch to System Mode"
@@ -106,21 +106,14 @@ function DropdownUserProfile() {
           <DropdownMenuSeparator />
           <DropdownMenuGroup>
             <DropdownMenuItem>
-              Changelog
+              Documentación
               <RiArrowRightUpLine
                 className="mb-1 ml-1 size-3 shrink-0 text-gray-500"
                 aria-hidden="true"
               />
             </DropdownMenuItem>
             <DropdownMenuItem>
-              Documentation
-              <RiArrowRightUpLine
-                className="mb-1 ml-1 size-3 shrink-0 text-gray-500"
-                aria-hidden="true"
-              />
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              Join Slack community
+              Soporte
               <RiArrowRightUpLine
                 className="mb-1 ml-1 size-3 shrink-0 text-gray-500"
                 aria-hidden="true"
@@ -131,7 +124,7 @@ function DropdownUserProfile() {
           <DropdownMenuGroup>
             <DropdownMenuItem>
               <a href={siteConfig.baseLinks.login} className="w-full">
-                Sign out
+                Cerrar sesión
               </a>
             </DropdownMenuItem>
           </DropdownMenuGroup>

@@ -1,49 +1,47 @@
-"use client"
+"use client";
 
-import { Button } from "@/components/Button"
-import { Card } from "@/components/Card"
-import { CategoryBar } from "@/components/CategoryBar"
-import { Divider } from "@/components/Divider"
-import { LineChartSupport } from "@/components/LineChartSupport"
-import { ProgressCircle } from "@/components/ProgressCircle"
-import { TicketDrawer } from "@/components/ui/TicketDrawer"
-import { DataTable } from "@/components/ui/data-table-support/DataTable"
-import { columns } from "@/components/ui/data-table-support/columns"
-import { tickets } from "@/data/support/tickets"
-import { volume } from "@/data/support/volume"
-import { RiAddLine } from "@remixicon/react"
-import React from "react"
+import { Button } from "@/components/Button";
+import { Card } from "@/components/Card";
+import { CategoryBar } from "@/components/CategoryBar";
+import { Divider } from "@/components/Divider";
+import { LineChartSupport } from "@/components/LineChartSupport";
+import { ProgressCircle } from "@/components/ProgressCircle";
+import { DataTable } from "@/components/ui/data-table-support/DataTable";
+import { columns } from "@/components/ui/data-table-support/columns";
+import { tickets } from "@/data/support/tickets";
+import { volume } from "@/data/support/volume";
+import { RiAddLine } from "@remixicon/react";
+import React from "react";
 
-export default function SupportDashboard() {
-  const [isOpen, setIsOpen] = React.useState(false)
+export default function OverviewDashboard() {
   return (
     <main>
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-2xl font-semibold text-gray-900 dark:text-gray-50">
-            Support Dashboard
+            Overview
           </h1>
           <p className="text-gray-500 sm:text-sm/6 dark:text-gray-500">
-            Real-time monitoring of support metrics with AI-powered insights
+            Información y estadísticas de ingresos trimestrales
           </p>
         </div>
         <Button
-          onClick={() => setIsOpen(true)}
           className="flex items-center gap-2 text-base sm:text-sm"
         >
-          Create Ticket
+          Cargar datos
           <RiAddLine className="-mr-0.5 size-5 shrink-0" aria-hidden="true" />
         </Button>
-        <TicketDrawer open={isOpen} onOpenChange={setIsOpen} />
       </div>
+
       <Divider />
+
       <dl className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
         <Card>
           <dt className="text-sm font-medium text-gray-900 dark:text-gray-50">
-            Current Tickets
+            Trimestre actual
           </dt>
           <dd className="mt-1 text-3xl font-semibold text-gray-900 dark:text-gray-50">
-            247
+            247 prospectos
           </dd>
           <CategoryBar
             values={[82, 13, 5]}
@@ -64,7 +62,7 @@ export default function SupportDashboard() {
                   className="size-2.5 shrink-0 rounded-sm bg-blue-500 dark:bg-blue-500"
                   aria-hidden="true"
                 />
-                <span className="text-sm">Resolved</span>
+                <span className="text-sm">Inscritos</span>
               </div>
             </li>
             <li>
@@ -76,7 +74,7 @@ export default function SupportDashboard() {
                   className="size-2.5 shrink-0 rounded-sm bg-gray-400 dark:bg-gray-600"
                   aria-hidden="true"
                 />
-                <span className="text-sm">In Progress</span>
+                <span className="text-sm">Pendientes</span>
               </div>
             </li>
             <li>
@@ -88,14 +86,15 @@ export default function SupportDashboard() {
                   className="size-2.5 shrink-0 rounded-sm bg-red-500 dark:bg-red-500"
                   aria-hidden="true"
                 />
-                <span className="text-sm">Escalated</span>
+                <span className="text-sm">Bajas</span>
               </div>
             </li>
           </ul>
         </Card>
+        
         <Card>
           <dt className="text-sm font-medium text-gray-900 dark:text-gray-50">
-            SLA Performance
+            Matrículas
           </dt>
           <div className="mt-4 flex flex-nowrap items-center justify-between gap-y-4">
             <dd className="space-y-3">
@@ -105,7 +104,7 @@ export default function SupportDashboard() {
                     className="size-2.5 shrink-0 rounded-sm bg-blue-500 dark:bg-blue-500"
                     aria-hidden="true"
                   />
-                  <span className="text-sm">Within SLA</span>
+                  <span className="text-sm">Alumnos inscritos</span>
                 </div>
                 <span className="mt-1 block text-2xl font-semibold text-gray-900 dark:text-gray-50">
                   83.3%
@@ -118,7 +117,7 @@ export default function SupportDashboard() {
                     aria-hidden="true"
                   />
                   <span className="text-sm text-gray-900 dark:text-gray-50">
-                    SLA Breached
+                    Alumnos dados de baja
                   </span>
                 </div>
                 <span className="mt-1 block text-2xl font-semibold text-gray-900 dark:text-gray-50">
@@ -129,9 +128,10 @@ export default function SupportDashboard() {
             <ProgressCircle value={83} radius={45} strokeWidth={7} />
           </div>
         </Card>
+        
         <Card>
           <dt className="text-sm font-medium text-gray-900 dark:text-gray-50">
-            Call Volume Trends
+            Volumen de inscripciones
           </dt>
           <div className="mt-4 flex items-center gap-x-8 gap-y-4">
             <dd className="space-y-3 whitespace-nowrap">
@@ -141,7 +141,7 @@ export default function SupportDashboard() {
                     className="size-2.5 shrink-0 rounded-sm bg-blue-500 dark:bg-blue-500"
                     aria-hidden="true"
                   />
-                  <span className="text-sm">Today</span>
+                  <span className="text-sm">Trimestre 2025-1</span>
                 </div>
                 <span className="mt-1 block text-2xl font-semibold text-gray-900 dark:text-gray-50">
                   573
@@ -153,13 +153,14 @@ export default function SupportDashboard() {
                     className="size-2.5 shrink-0 rounded-sm bg-gray-400 dark:bg-gray-600"
                     aria-hidden="true"
                   />
-                  <span className="text-sm">Yesterday</span>
+                  <span className="text-sm">Trimestre 2024-4</span>
                 </div>
                 <span className="mt-1 block text-2xl font-semibold text-gray-900 dark:text-gray-50">
                   451
                 </span>
               </div>
             </dd>
+            
             <LineChartSupport
               className="h-28"
               data={volume}
@@ -177,7 +178,8 @@ export default function SupportDashboard() {
           </div>
         </Card>
       </dl>
+      
       <DataTable data={tickets} columns={columns} />
     </main>
-  )
+  );
 }

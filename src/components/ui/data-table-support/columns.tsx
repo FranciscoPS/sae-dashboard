@@ -18,7 +18,7 @@ const typeIconMapping: Record<string, React.ElementType> = {
 
 export const columns = [
   {
-    header: "Created at",
+    header: "Creado el día",
     accessorKey: "created",
     meta: {
       className: "text-left",
@@ -36,7 +36,7 @@ export const columns = [
     ),
   },
   {
-    header: "Description",
+    header: "Nombre",
     accessorKey: "description",
     meta: {
       className: "text-left",
@@ -44,7 +44,7 @@ export const columns = [
     },
   },
   {
-    header: "Policy Info",
+    header: "Matrícula",
     accessorKey: "policyNumber",
     meta: {
       className: "text-left",
@@ -52,7 +52,7 @@ export const columns = [
     },
   },
   {
-    header: "Contact Type",
+    header: "Carrera",
     accessorKey: "type",
     meta: {
       className: "text-left",
@@ -70,7 +70,7 @@ export const columns = [
     },
   },
   {
-    header: "Duration",
+    header: "Trimestre",
     accessorKey: "duration",
     meta: {
       className: "text-right",
@@ -97,7 +97,7 @@ export const columns = [
     },
   },
   {
-    header: "Assessed Priority",
+    header: "Status",
     accessorKey: "priority",
     meta: {
       className: "text-left",
