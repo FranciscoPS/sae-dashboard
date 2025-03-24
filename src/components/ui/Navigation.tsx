@@ -3,7 +3,6 @@
 import { TabNavigation, TabNavigationLink } from "@/components/TabNavigation"
 import Link from "next/link"
 import { Notifications } from "./Notifications"
-
 import { usePathname } from "next/navigation"
 import { Logo } from "../../../public/Logo"
 import { DropdownUserProfile } from "./UserProfile"
@@ -34,9 +33,9 @@ function Navigation() {
           <TabNavigationLink
             className="inline-flex gap-2"
             asChild
-            active={pathname === "/tablas"}
+            active={pathname === "/tables"}
           >
-            <Link href="/tablas">Tablas</Link>
+            <Link href="/tables">Tablas</Link>
           </TabNavigationLink>
           <TabNavigationLink
             className="inline-flex gap-2"
