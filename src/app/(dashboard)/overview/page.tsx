@@ -11,9 +11,29 @@ import { columns } from "@/components/ui/data-table-support/columns";
 import { tickets } from "@/data/support/tickets";
 import { volume } from "@/data/support/volume";
 import { RiAddLine } from "@remixicon/react";
-import React from "react";
+import React, { useEffect } from "react";
+import { db } from "../../../firebase/config";
+import { collection, getDocs } from "firebase/firestore";
 
 export default function OverviewDashboard() {
+
+  
+  useEffect(() => {
+    const niHistorialRef = collection(db, "carreras");
+
+    getDocs(niHistorialRef)
+      .then(response => {
+
+        console.log(
+          response.docs.map(doc => {
+            return { ...doc.data(), id: doc.id }
+          })
+        );
+
+      });
+
+  }, []);
+  
   return (
     <main>
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
