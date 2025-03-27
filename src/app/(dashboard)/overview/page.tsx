@@ -11,29 +11,90 @@ import { columns } from "@/components/ui/data-table-support/columns";
 import { tickets } from "@/data/support/tickets";
 import { volume } from "@/data/support/volume";
 import { RiAddLine } from "@remixicon/react";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { db } from "../../../firebase/config";
 import { collection, getDocs } from "firebase/firestore";
 
-export default function OverviewDashboard() {
+type CarreraData = {
+  id: string;
+  Carrera?: string;
+  Siglas?: string;
+  [key: string]: string | undefined;
+};
 
-  
+export default function OverviewDashboard() {
+  const trimestreActual = "NI 2024 T4";
+  const [carreras, setCarreras] = useState<CarreraData[]>([]);
+  const [volumen, setVolumen] = useState([
+    { time: "Actual", Today: 0, Yesterday: 0 },
+  ]);
+  const [resumen, setResumen] = useState({
+    total: 0,
+    inscritos: 0,
+    pendientes: 0,
+    bajas: 0,
+    porcentajeInscritos: 0,
+    porcentajePendientes: 0,
+    porcentajeBajas: 0,
+  });
+
   useEffect(() => {
     const niHistorialRef = collection(db, "carreras");
 
-    getDocs(niHistorialRef)
-      .then(response => {
+    getDocs(niHistorialRef).then((response) => {
+      const data: CarreraData[] = response.docs.map((doc) => ({
+        ...doc.data(),
+        id: doc.id,
+      }));
+      setCarreras(data);
 
-        console.log(
-          response.docs.map(doc => {
-            return { ...doc.data(), id: doc.id }
-          })
-        );
+      let total = 0;
+      let inscritos = 0;
+      let pendientes = 0;
+      let bajas = 0;
 
+      //TODO: Obtener lógica de inscritos, bajas y pendientes real
+      data.forEach((entry) => {
+        const raw = entry[trimestreActual];
+        const value = raw ? parseInt(raw) : 0;
+        total += value;
+
+        if (value >= 30) inscritos += value;
+        else if (value >= 10) pendientes += value;
+        else bajas += value;
       });
 
+      const porcentaje = (v: number) =>
+        total > 0 ? Math.round((v / total) * 100) : 0;
+
+      setResumen({
+        total,
+        inscritos,
+        pendientes,
+        bajas,
+        porcentajeInscritos: porcentaje(inscritos),
+        porcentajePendientes: porcentaje(pendientes),
+        porcentajeBajas: porcentaje(bajas),
+      });
+
+      // Para el gráfico de volumen
+      const trimestreAnterior = "NI 2024 T3";
+
+      const newVolume = data.map((entry) => {
+        const todayRaw = entry[trimestreActual] as string | undefined;
+        const yesterdayRaw = entry[trimestreAnterior] as string | undefined;
+
+        return {
+          time: entry.Siglas || entry.Carrera || entry.id,
+          Today: todayRaw ? parseInt(todayRaw) : 0,
+          Yesterday: yesterdayRaw ? parseInt(yesterdayRaw) : 0,
+        };
+      });
+
+      setVolumen(newVolume);
+    });
   }, []);
-  
+
   return (
     <main>
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
@@ -45,9 +106,7 @@ export default function OverviewDashboard() {
             Información y estadísticas de ingresos trimestrales
           </p>
         </div>
-        <Button
-          className="flex items-center gap-2 text-base sm:text-sm"
-        >
+        <Button className="flex items-center gap-2 text-base sm:text-sm">
           Cargar datos
           <RiAddLine className="-mr-0.5 size-5 shrink-0" aria-hidden="true" />
         </Button>
@@ -58,13 +117,17 @@ export default function OverviewDashboard() {
       <dl className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
         <Card>
           <dt className="text-sm font-medium text-gray-900 dark:text-gray-50">
-            Trimestre actual
+            Trimestre actual {trimestreActual}
           </dt>
           <dd className="mt-1 text-3xl font-semibold text-gray-900 dark:text-gray-50">
-            247 prospectos
+            {resumen.total} prospectos
           </dd>
           <CategoryBar
-            values={[82, 13, 5]}
+            values={[
+              resumen.porcentajeInscritos,
+              resumen.porcentajePendientes,
+              resumen.porcentajeBajas,
+            ]}
             className="mt-6"
             colors={["blue", "gray", "amber"]}
             showLabels={false}
@@ -75,7 +138,7 @@ export default function OverviewDashboard() {
           >
             <li>
               <span className="text-base font-semibold text-gray-900 dark:text-gray-50">
-                82%
+                {resumen.porcentajeInscritos}%
               </span>
               <div className="flex items-center gap-2">
                 <span
@@ -87,7 +150,7 @@ export default function OverviewDashboard() {
             </li>
             <li>
               <span className="text-base font-semibold text-gray-900 dark:text-gray-50">
-                13%
+                {resumen.porcentajePendientes}%
               </span>
               <div className="flex items-center gap-2">
                 <span
@@ -99,11 +162,11 @@ export default function OverviewDashboard() {
             </li>
             <li>
               <span className="text-base font-semibold text-gray-900 dark:text-gray-50">
-                5%
+                {resumen.porcentajeBajas}%
               </span>
               <div className="flex items-center gap-2">
                 <span
-                  className="size-2.5 shrink-0 rounded-sm bg-red-500 dark:bg-red-500"
+                  className="size-2.5 shrink-0 rounded-sm bg-orange-500 dark:bg-orange-500"
                   aria-hidden="true"
                 />
                 <span className="text-sm">Bajas</span>
@@ -111,10 +174,10 @@ export default function OverviewDashboard() {
             </li>
           </ul>
         </Card>
-        
+
         <Card>
           <dt className="text-sm font-medium text-gray-900 dark:text-gray-50">
-            Matrículas
+            Prospectos incritos
           </dt>
           <div className="mt-4 flex flex-nowrap items-center justify-between gap-y-4">
             <dd className="space-y-3">
@@ -127,28 +190,18 @@ export default function OverviewDashboard() {
                   <span className="text-sm">Alumnos inscritos</span>
                 </div>
                 <span className="mt-1 block text-2xl font-semibold text-gray-900 dark:text-gray-50">
-                  83.3%
-                </span>
-              </div>
-              <div>
-                <div className="flex items-center gap-2">
-                  <span
-                    className="size-2.5 shrink-0 rounded-sm bg-red-500 dark:bg-red-500"
-                    aria-hidden="true"
-                  />
-                  <span className="text-sm text-gray-900 dark:text-gray-50">
-                    Alumnos dados de baja
-                  </span>
-                </div>
-                <span className="mt-1 block text-2xl font-semibold text-gray-900 dark:text-gray-50">
-                  16.7%
+                  {resumen.porcentajeInscritos}%
                 </span>
               </div>
             </dd>
-            <ProgressCircle value={83} radius={45} strokeWidth={7} />
+            <ProgressCircle
+              value={resumen.porcentajeInscritos}
+              radius={45}
+              strokeWidth={7}
+            />
           </div>
         </Card>
-        
+
         <Card>
           <dt className="text-sm font-medium text-gray-900 dark:text-gray-50">
             Volumen de inscripciones
@@ -164,7 +217,7 @@ export default function OverviewDashboard() {
                   <span className="text-sm">Trimestre 2025-1</span>
                 </div>
                 <span className="mt-1 block text-2xl font-semibold text-gray-900 dark:text-gray-50">
-                  573
+                  {resumen.total}
                 </span>
               </div>
               <div>
@@ -176,14 +229,14 @@ export default function OverviewDashboard() {
                   <span className="text-sm">Trimestre 2024-4</span>
                 </div>
                 <span className="mt-1 block text-2xl font-semibold text-gray-900 dark:text-gray-50">
-                  451
+                  {resumen.total + 10}
                 </span>
               </div>
             </dd>
-            
+
             <LineChartSupport
               className="h-28"
-              data={volume}
+              data={volumen} // este es el nuevo
               index="time"
               categories={["Today", "Yesterday"]}
               colors={["blue", "gray"]}
@@ -198,7 +251,7 @@ export default function OverviewDashboard() {
           </div>
         </Card>
       </dl>
-      
+
       <DataTable data={tickets} columns={columns} />
     </main>
   );
