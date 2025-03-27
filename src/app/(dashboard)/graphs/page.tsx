@@ -70,11 +70,9 @@ const chartdata = [
 ];
 
 const data = [
-  { name: "/home", value: 843 },
-  { name: "/imprint", value: 46 },
-  { name: "/cancellation", value: 3 },
-  { name: "/blocks", value: 108 },
-  { name: "/documentation", value: 384 },
+  { name: "Inscritos", value: 843 },
+  { name: "Pendientes", value: 46 },
+  { name: "Bajas", value: 30 },
 ];
 
 export default function Graphs() {
