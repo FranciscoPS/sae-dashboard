@@ -14,7 +14,7 @@ function Navigation() {
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6 pt-3">
         <div>
           <span className="sr-only">SAE Institute</span>
-          <Logo className="h-6" />
+          {/* <Logo className="h-6" /> */}
         </div>
         <div className="flex h-[42px] flex-nowrap gap-1">
           <Notifications />

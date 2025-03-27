@@ -1,6 +1,6 @@
 export const siteConfig = {
-    name: "Overview",
-    url: "https://overview.tremor.so",
+    name: "SAE Dashboard",
+    url: "https://www.sae.mx",
     description: "The only reporting and audit dashboard you will ever need.",
     baseLinks: {
       overview: "/overview",
