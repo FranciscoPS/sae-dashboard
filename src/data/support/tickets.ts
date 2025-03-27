@@ -1,1104 +1,462 @@
-import { Ticket } from "./schema";
+type Registro = {
+  id: string;
+  created: string; // o Date
+  name: string;
+  enrollment: string; // "matrícula"
+  career: string;
+  trimester: string;
+  status: "inscrito" | "pendiente" | "baja";
+};
 
-export const tickets: Ticket[] = [
-  {
-    "status": "escalated",
-    "created": "2024-10-31T06:44:20.957Z",
-    "description": "Fraudulent policy report",
-    "priority": "high",
-    "category": "fraud-report",
-    "type": "billing",
-    "duration": "20",
-    "policyNumber": "BIZ-50908850",
-    "policyType": "business"
-  },
-  {
-    "status": "escalated",
-    "created": "2024-10-31T06:29:48.518Z",
-    "description": "Agent conduct complaint",
-    "priority": "low",
-    "category": "complaint",
-    "type": "coverage",
-    "duration": "50",
-    "policyNumber": "HOME-30070782",
-    "policyType": "home"
-  },
-  {
-    "status": "resolved",
-    "created": "2024-10-30T06:10:30.101Z",
-    "description": "Home insurance quote request",
-    "priority": "high",
-    "category": "new-quote",
-    "type": "coverage",
-    "duration": "111",
-    "policyNumber": "HOME-64158242",
-    "policyType": "home"
-  },
-  {
-    "status": "escalated",
-    "created": "2024-10-28T05:41:02.485Z",
-    "description": "Agent conduct complaint",
-    "priority": "medium",
-    "category": "complaint",
-    "type": "coverage",
-    "duration": "62",
-    "policyNumber": "UMB-16291908",
-    "policyType": "umbrella"
-  },
-  {
-    "status": "escalated",
-    "created": "2024-10-28T04:20:34.501Z",
-    "description": "Suspicious claim activity",
-    "priority": "high",
-    "category": "fraud-report",
-    "type": "fnol",
-    "duration": "70",
-    "policyNumber": "UMB-95757245",
-    "policyType": "umbrella"
-  },
-  {
-    "status": "resolved",
-    "created": "2024-10-27T22:10:47.326Z",
-    "description": "Life insurance quote",
-    "priority": "high",
-    "category": "new-quote",
-    "type": "policy",
-    "duration": "67",
-    "policyNumber": "BIZ-34577851",
-    "policyType": "business"
-  },
-  {
-    "status": "escalated",
-    "created": "2024-10-26T05:54:52.030Z",
-    "description": "Premium increase inquiry",
-    "priority": "emergency",
-    "category": "billing",
-    "type": "claims",
-    "duration": "40",
-    "policyNumber": "UMB-97468292",
-    "policyType": "umbrella"
-  },
-  {
-    "status": "escalated",
-    "created": "2024-10-25T21:56:17.179Z",
-    "description": "Local agent office inquiry",
-    "priority": "low",
-    "category": "agent-request",
-    "type": "claims",
-    "duration": "71",
-    "policyNumber": "HLTH-98624214",
-    "policyType": "health"
-  },
-  {
-    "status": "escalated",
-    "created": "2024-10-25T00:49:08.570Z",
-    "description": "Identity theft report",
-    "priority": "emergency",
-    "category": "fraud-report",
-    "type": "coverage",
-    "duration": "24",
-    "policyNumber": "BIZ-94607676",
-    "policyType": "business"
-  },
-  {
-    "status": "resolved",
-    "created": "2024-10-24T21:09:34.426Z",
-    "description": "Coverage denial appeal",
-    "priority": "emergency",
-    "category": "complaint",
-    "type": "billing",
-    "duration": "43",
-    "policyNumber": "LIFE-96995330",
-    "policyType": "life"
-  },
-  {
-    "status": "escalated",
-    "created": "2024-10-24T19:58:19.853Z",
-    "description": "Agent conduct complaint",
-    "priority": "medium",
-    "category": "complaint",
-    "type": "coverage",
-    "duration": "43",
-    "policyNumber": "LIFE-83319078",
-    "policyType": "life"
-  },
-  {
-    "status": "in-progress",
-    "created": "2024-10-24T11:10:10.840Z",
-    "description": "Additional information for claim",
-    "priority": "low",
-    "category": "claim-status",
-    "type": "fnol",
-    "duration": "106",
-    "policyNumber": "UMB-45242451",
-    "policyType": "umbrella"
-  },
-  {
-    "status": "in-progress",
-    "created": "2024-10-24T04:07:29.973Z",
-    "description": "Coverage denial appeal",
-    "priority": "medium",
-    "category": "complaint",
-    "type": "claims",
-    "duration": "5",
-    "policyNumber": "UMB-69011586",
-    "policyType": "umbrella"
-  },
-  {
-    "status": "escalated",
-    "created": "2024-10-24T00:26:42.272Z",
-    "description": "Agent contact information needed",
-    "priority": "low",
-    "category": "agent-request",
-    "type": "coverage",
-    "duration": "72",
-    "policyNumber": "UMB-71052178",
-    "policyType": "umbrella"
-  },
-  {
-    "status": "escalated",
-    "created": "2024-10-22T17:09:16.317Z",
-    "description": "Suspicious document submission",
-    "priority": "low",
-    "category": "fraud-report",
-    "type": "claims",
-    "duration": "111",
-    "policyNumber": "BIZ-64539950",
-    "policyType": "business"
-  },
-  {
-    "status": "in-progress",
-    "created": "2024-10-22T09:39:35.348Z",
-    "description": "Service delay complaint",
-    "priority": "medium",
-    "category": "complaint",
-    "type": "fnol",
-    "duration": "72",
-    "policyNumber": "UMB-14768092",
-    "policyType": "umbrella"
-  },
-  {
-    "status": "resolved",
-    "created": "2024-10-22T00:08:33.100Z",
-    "description": "Update coverage limits",
-    "priority": "medium",
-    "category": "policy-changes",
-    "type": "emergency",
-    "duration": "50",
-    "policyNumber": "HOME-61646900",
-    "policyType": "home"
-  },
-  {
-    "status": "resolved",
-    "created": "2024-10-21T23:14:12.157Z",
-    "description": "Premium increase inquiry",
-    "priority": "medium",
-    "category": "billing",
-    "type": "policy",
-    "duration": "110",
-    "policyNumber": "UMB-06275500",
-    "policyType": "umbrella"
-  },
-  {
-    "status": "in-progress",
-    "created": "2024-10-21T21:34:43.448Z",
-    "description": "Schedule agent consultation",
-    "priority": "emergency",
-    "category": "agent-request",
-    "type": "emergency",
-    "duration": "19",
-    "policyNumber": "HLTH-39123847",
-    "policyType": "health"
-  },
-  {
-    "status": "in-progress",
-    "created": "2024-10-18T17:07:35.425Z",
-    "description": "Immediate assistance required",
-    "priority": "high",
-    "category": "emergency",
-    "type": "coverage",
-    "duration": "4",
-    "policyNumber": "LIFE-61415012",
-    "policyType": "life"
-  },
-  {
-    "status": "escalated",
-    "created": "2024-10-18T03:55:35.615Z",
-    "description": "Claim processing timeline inquiry",
-    "priority": "low",
-    "category": "claim-status",
-    "type": "billing",
-    "duration": "84",
-    "policyNumber": "HLTH-99613738",
-    "policyType": "health"
-  },
-  {
-    "status": "escalated",
-    "created": "2024-10-16T15:31:39.840Z",
-    "description": "Coverage extension questions",
-    "priority": "emergency",
-    "category": "coverage-inquiry",
-    "type": "claims",
-    "duration": "76",
-    "policyNumber": "LIFE-83972767",
-    "policyType": "life"
-  },
-  {
-    "status": "resolved",
-    "created": "2024-10-16T13:44:12.339Z",
-    "description": "Agent contact information needed",
-    "priority": "high",
-    "category": "agent-request",
-    "type": "billing",
-    "duration": "13",
-    "policyNumber": "AUTO-74260896",
-    "policyType": "auto"
-  },
-  {
-    "status": "resolved",
-    "created": "2024-10-16T08:35:51.773Z",
-    "description": "Online account access issues",
-    "priority": "emergency",
-    "category": "account-service",
-    "type": "coverage",
-    "duration": "113",
-    "policyNumber": "LIFE-37321310",
-    "policyType": "life"
-  },
-  {
-    "status": "escalated",
-    "created": "2024-10-15T20:31:26.564Z",
-    "description": "Additional information for claim",
-    "priority": "high",
-    "category": "claim-status",
-    "type": "claims",
-    "duration": "7",
-    "policyNumber": "UMB-28519714",
-    "policyType": "umbrella"
-  },
-  {
-    "status": "in-progress",
-    "created": "2024-10-15T05:13:11.904Z",
-    "description": "Multiple policy quote",
-    "priority": "high",
-    "category": "new-quote",
-    "type": "claims",
-    "duration": "32",
-    "policyNumber": "AUTO-28934869",
-    "policyType": "auto"
-  },
-  {
-    "status": "in-progress",
-    "created": "2024-10-14T13:07:50.655Z",
-    "description": "Autopay enrollment",
-    "priority": "low",
-    "category": "billing",
-    "type": "emergency",
-    "duration": "24",
-    "policyNumber": "BIZ-26847330",
-    "policyType": "business"
-  },
-  {
-    "status": "escalated",
-    "created": "2024-10-14T10:43:51.606Z",
-    "description": "Update policy beneficiaries",
-    "priority": "medium",
-    "category": "policy-changes",
-    "type": "billing",
-    "duration": "10",
-    "policyNumber": "UMB-17440212",
-    "policyType": "umbrella"
-  },
-  {
-    "status": "resolved",
-    "created": "2024-10-14T07:49:15.484Z",
-    "description": "Additional coverage options",
-    "priority": "emergency",
-    "category": "coverage-inquiry",
-    "type": "fnol",
-    "duration": "24",
-    "policyNumber": "BIZ-49960119",
-    "policyType": "business"
-  },
-  {
-    "status": "in-progress",
-    "created": "2024-10-13T22:22:50.667Z",
-    "description": "Single vehicle incident report",
-    "priority": "high",
-    "category": "accident-report",
-    "type": "fnol",
-    "duration": "81",
-    "policyNumber": "BIZ-52075836",
-    "policyType": "business"
-  },
-  {
-    "status": "resolved",
-    "created": "2024-10-13T17:42:44.060Z",
-    "description": "Change deductible amount",
-    "priority": "low",
-    "category": "policy-changes",
-    "type": "billing",
-    "duration": "9",
-    "policyNumber": "UMB-09640986",
-    "policyType": "umbrella"
-  },
-  {
-    "status": "resolved",
-    "created": "2024-10-12T22:12:14.948Z",
-    "description": "Add new driver to policy",
-    "priority": "low",
-    "category": "policy-changes",
-    "type": "coverage",
-    "duration": "91",
-    "policyNumber": "AUTO-73385509",
-    "policyType": "auto"
-  },
-  {
-    "status": "in-progress",
-    "created": "2024-10-11T14:28:26.139Z",
-    "description": "Agent contact information needed",
-    "priority": "medium",
-    "category": "agent-request",
-    "type": "emergency",
-    "duration": "41",
-    "policyNumber": "HLTH-99883354",
-    "policyType": "health"
-  },
-  {
-    "status": "escalated",
-    "created": "2024-10-10T10:27:23.821Z",
-    "description": "Home emergency - water damage",
-    "priority": "medium",
-    "category": "emergency",
-    "type": "fnol",
-    "duration": "46",
-    "policyNumber": "BIZ-13351456",
-    "policyType": "business"
-  },
-  {
-    "status": "escalated",
-    "created": "2024-10-10T07:16:14.044Z",
-    "description": "Policy limits inquiry",
-    "priority": "low",
-    "category": "coverage-inquiry",
-    "type": "billing",
-    "duration": "92",
-    "policyNumber": "UMB-14397932",
-    "policyType": "umbrella"
-  },
-  {
-    "status": "escalated",
-    "created": "2024-10-09T04:06:59.055Z",
-    "description": "Proof of insurance needed",
-    "priority": "medium",
-    "category": "document-request",
-    "type": "policy",
-    "duration": "58",
-    "policyNumber": "BIZ-06939168",
-    "policyType": "business"
-  },
-  {
-    "status": "in-progress",
-    "created": "2024-10-08T10:36:13.773Z",
-    "description": "Agent contact information needed",
-    "priority": "high",
-    "category": "agent-request",
-    "type": "policy",
-    "duration": "102",
-    "policyNumber": "LIFE-88337394",
-    "policyType": "life"
-  },
-  {
-    "status": "in-progress",
-    "created": "2024-10-07T11:45:25.101Z",
-    "description": "Billing address update",
-    "priority": "high",
-    "category": "billing",
-    "type": "policy",
-    "duration": "73",
-    "policyNumber": "HOME-85324226",
-    "policyType": "home"
-  },
-  {
-    "status": "in-progress",
-    "created": "2024-10-06T21:40:33.282Z",
-    "description": "Critical incident report",
-    "priority": "medium",
-    "category": "emergency",
-    "type": "emergency",
-    "duration": "66",
-    "policyNumber": "LIFE-95501107",
-    "policyType": "life"
-  },
-  {
-    "status": "in-progress",
-    "created": "2024-10-06T20:43:08.837Z",
-    "description": "Coverage verification request",
-    "priority": "low",
-    "category": "coverage-inquiry",
-    "type": "policy",
-    "duration": "73",
-    "policyNumber": "HOME-99383742",
-    "policyType": "home"
-  },
-  {
-    "status": "resolved",
-    "created": "2024-10-05T22:08:09.339Z",
-    "description": "Suspicious document submission",
-    "priority": "high",
-    "category": "fraud-report",
-    "type": "billing",
-    "duration": "43",
-    "policyNumber": "UMB-60216637",
-    "policyType": "umbrella"
-  },
-  {
-    "status": "resolved",
-    "created": "2024-10-05T00:13:12.801Z",
-    "description": "Document submission for existing claim",
-    "priority": "high",
-    "category": "claim-status",
-    "type": "emergency",
-    "duration": "108",
-    "policyNumber": "AUTO-13567920",
-    "policyType": "auto"
-  },
-  {
-    "status": "resolved",
-    "created": "2024-10-04T18:19:51.640Z",
-    "description": "Immediate assistance required",
-    "priority": "high",
-    "category": "emergency",
-    "type": "billing",
-    "duration": "76",
-    "policyNumber": "BIZ-28812192",
-    "policyType": "business"
-  },
-  {
-    "status": "resolved",
-    "created": "2024-10-04T17:06:30.019Z",
-    "description": "Portal navigation assistance",
-    "priority": "medium",
-    "category": "account-service",
-    "type": "claims",
-    "duration": "70",
-    "policyNumber": "AUTO-32421294",
-    "policyType": "auto"
-  },
-  {
-    "status": "escalated",
-    "created": "2024-10-04T10:06:32.347Z",
-    "description": "Suspicious claim activity",
-    "priority": "emergency",
-    "category": "fraud-report",
-    "type": "policy",
-    "duration": "7",
-    "policyNumber": "BIZ-13761098",
-    "policyType": "business"
-  },
-  {
-    "status": "in-progress",
-    "created": "2024-10-04T08:53:32.785Z",
-    "description": "Additional information for claim",
-    "priority": "emergency",
-    "category": "claim-status",
-    "type": "fnol",
-    "duration": "84",
-    "policyNumber": "LIFE-84196114",
-    "policyType": "life"
-  },
-  {
-    "status": "resolved",
-    "created": "2024-10-03T17:03:00.710Z",
-    "description": "Vehicle theft report",
-    "priority": "high",
-    "category": "accident-report",
-    "type": "emergency",
-    "duration": "88",
-    "policyNumber": "AUTO-18329690",
-    "policyType": "auto"
-  },
-  {
-    "status": "in-progress",
-    "created": "2024-10-02T10:32:07.730Z",
-    "description": "Coverage verification letter",
-    "priority": "high",
-    "category": "document-request",
-    "type": "policy",
-    "duration": "106",
-    "policyNumber": "HLTH-23350110",
-    "policyType": "health"
-  },
-  {
-    "status": "resolved",
-    "created": "2024-10-02T10:23:07.964Z",
-    "description": "Following up on claim #REF-123",
-    "priority": "medium",
-    "category": "claim-status",
-    "type": "fnol",
-    "duration": "48",
-    "policyNumber": "HLTH-19497089",
-    "policyType": "health"
-  },
-  {
-    "status": "escalated",
-    "created": "2024-10-01T21:42:47.792Z",
-    "description": "Medical emergency assistance",
-    "priority": "low",
-    "category": "emergency",
-    "type": "policy",
-    "duration": "49",
-    "policyNumber": "HLTH-09663638",
-    "policyType": "health"
-  },
-  {
-    "status": "in-progress",
-    "created": "2024-10-01T17:19:01.845Z",
-    "description": "Billing dispute",
-    "priority": "medium",
-    "category": "complaint",
-    "type": "fnol",
-    "duration": "21",
-    "policyNumber": "AUTO-65899934",
-    "policyType": "auto"
-  },
-  {
-    "status": "in-progress",
-    "created": "2024-10-01T16:32:45.156Z",
-    "description": "Insurance card replacement",
-    "priority": "medium",
-    "category": "document-request",
-    "type": "emergency",
-    "duration": "52",
-    "policyNumber": "HOME-60719572",
-    "policyType": "home"
-  },
-  {
-    "status": "resolved",
-    "created": "2024-10-01T15:39:32.045Z",
-    "description": "Portal navigation assistance",
-    "priority": "low",
-    "category": "account-service",
-    "type": "claims",
-    "duration": "118",
-    "policyNumber": "AUTO-76234372",
-    "policyType": "auto"
-  },
-  {
-    "status": "resolved",
-    "created": "2024-10-01T11:43:03.718Z",
-    "description": "Identity theft report",
-    "priority": "emergency",
-    "category": "fraud-report",
-    "type": "emergency",
-    "duration": "5",
-    "policyNumber": "AUTO-67643002",
-    "policyType": "auto"
-  },
-  {
-    "status": "escalated",
-    "created": "2024-09-29T09:07:16.007Z",
-    "description": "New agent assignment request",
-    "priority": "high",
-    "category": "agent-request",
-    "type": "billing",
-    "duration": "41",
-    "policyNumber": "LIFE-13070351",
-    "policyType": "life"
-  },
-  {
-    "status": "resolved",
-    "created": "2024-09-28T07:05:16.923Z",
-    "description": "New agent assignment request",
-    "priority": "emergency",
-    "category": "agent-request",
-    "type": "fnol",
-    "duration": "118",
-    "policyNumber": "AUTO-97160921",
-    "policyType": "auto"
-  },
-  {
-    "status": "in-progress",
-    "created": "2024-09-27T11:22:05.336Z",
-    "description": "Agent contact information needed",
-    "priority": "high",
-    "category": "agent-request",
-    "type": "policy",
-    "duration": "4",
-    "policyNumber": "LIFE-57976352",
-    "policyType": "life"
-  },
-  {
-    "status": "in-progress",
-    "created": "2024-09-27T08:45:13.997Z",
-    "description": "Update coverage limits",
-    "priority": "emergency",
-    "category": "policy-changes",
-    "type": "coverage",
-    "duration": "89",
-    "policyNumber": "HOME-19819432",
-    "policyType": "home"
-  },
-  {
-    "status": "escalated",
-    "created": "2024-09-26T22:48:42.292Z",
-    "description": "Suspicious claim activity",
-    "priority": "medium",
-    "category": "fraud-report",
-    "type": "emergency",
-    "duration": "2",
-    "policyNumber": "BIZ-31982978",
-    "policyType": "business"
-  },
-  {
-    "status": "in-progress",
-    "created": "2024-09-26T09:11:03.896Z",
-    "description": "Suspicious claim activity",
-    "priority": "high",
-    "category": "fraud-report",
-    "type": "emergency",
-    "duration": "81",
-    "policyNumber": "LIFE-69966849",
-    "policyType": "life"
-  },
-  {
-    "status": "in-progress",
-    "created": "2024-09-26T07:29:06.315Z",
-    "description": "Suspicious claim activity",
-    "priority": "high",
-    "category": "fraud-report",
-    "type": "policy",
-    "duration": "36",
-    "policyNumber": "HLTH-00528668",
-    "policyType": "health"
-  },
-  {
-    "status": "resolved",
-    "created": "2024-09-25T19:08:33.504Z",
-    "description": "Policy document copy request",
-    "priority": "medium",
-    "category": "document-request",
-    "type": "claims",
-    "duration": "24",
-    "policyNumber": "AUTO-30037491",
-    "policyType": "auto"
-  },
-  {
-    "status": "in-progress",
-    "created": "2024-09-25T16:45:28.285Z",
-    "description": "Single vehicle incident report",
-    "priority": "medium",
-    "category": "accident-report",
-    "type": "billing",
-    "duration": "66",
-    "policyNumber": "AUTO-81117294",
-    "policyType": "auto"
-  },
-  {
-    "status": "in-progress",
-    "created": "2024-09-25T15:10:48.539Z",
-    "description": "Autopay enrollment",
-    "priority": "high",
-    "category": "billing",
-    "type": "billing",
-    "duration": "38",
-    "policyNumber": "LIFE-65869424",
-    "policyType": "life"
-  },
-  {
-    "status": "resolved",
-    "created": "2024-09-24T01:17:03.842Z",
-    "description": "Payment method change",
-    "priority": "high",
-    "category": "billing",
-    "type": "policy",
-    "duration": "34",
-    "policyNumber": "LIFE-75483066",
-    "policyType": "life"
-  },
-  {
-    "status": "in-progress",
-    "created": "2024-09-23T23:22:21.697Z",
-    "description": "Suspicious claim activity",
-    "priority": "emergency",
-    "category": "fraud-report",
-    "type": "billing",
-    "duration": "76",
-    "policyNumber": "HLTH-60906435",
-    "policyType": "health"
-  },
-  {
-    "status": "resolved",
-    "created": "2024-09-23T07:54:10.565Z",
-    "description": "Agent availability check",
-    "priority": "high",
-    "category": "agent-request",
-    "type": "policy",
-    "duration": "62",
-    "policyNumber": "UMB-75340919",
-    "policyType": "umbrella"
-  },
-  {
-    "status": "resolved",
-    "created": "2024-09-23T04:07:48.022Z",
-    "description": "Remove vehicle from coverage",
-    "priority": "medium",
-    "category": "policy-changes",
-    "type": "fnol",
-    "duration": "27",
-    "policyNumber": "LIFE-51939072",
-    "policyType": "life"
-  },
-  {
-    "status": "escalated",
-    "created": "2024-09-20T05:19:25.706Z",
-    "description": "Business coverage quote",
-    "priority": "medium",
-    "category": "new-quote",
-    "type": "coverage",
-    "duration": "4",
-    "policyNumber": "HOME-40917409",
-    "policyType": "home"
-  },
-  {
-    "status": "escalated",
-    "created": "2024-09-19T22:27:16.656Z",
-    "description": "Proof of insurance needed",
-    "priority": "medium",
-    "category": "document-request",
-    "type": "fnol",
-    "duration": "77",
-    "policyNumber": "HLTH-44999012",
-    "policyType": "health"
-  },
-  {
-    "status": "escalated",
-    "created": "2024-09-18T21:06:31.405Z",
-    "description": "Home emergency - water damage",
-    "priority": "emergency",
-    "category": "emergency",
-    "type": "coverage",
-    "duration": "99",
-    "policyNumber": "BIZ-47709543",
-    "policyType": "business"
-  },
-  {
-    "status": "resolved",
-    "created": "2024-09-18T20:14:56.559Z",
-    "description": "Coverage extension questions",
-    "priority": "emergency",
-    "category": "coverage-inquiry",
-    "type": "billing",
-    "duration": "105",
-    "policyNumber": "AUTO-84766193",
-    "policyType": "auto"
-  },
-  {
-    "status": "resolved",
-    "created": "2024-09-16T02:32:11.440Z",
-    "description": "Proof of insurance needed",
-    "priority": "low",
-    "category": "document-request",
-    "type": "billing",
-    "duration": "80",
-    "policyNumber": "HLTH-66432778",
-    "policyType": "health"
-  },
-  {
-    "status": "escalated",
-    "created": "2024-09-16T00:21:24.245Z",
-    "description": "Password reset request",
-    "priority": "high",
-    "category": "account-service",
-    "type": "fnol",
-    "duration": "83",
-    "policyNumber": "AUTO-25546550",
-    "policyType": "auto"
-  },
-  {
-    "status": "resolved",
-    "created": "2024-09-15T22:37:51.814Z",
-    "description": "Coverage verification request",
-    "priority": "high",
-    "category": "coverage-inquiry",
-    "type": "policy",
-    "duration": "107",
-    "policyNumber": "AUTO-85336005",
-    "policyType": "auto"
-  },
-  {
-    "status": "resolved",
-    "created": "2024-09-14T17:57:49.507Z",
-    "description": "Multiple policy quote",
-    "priority": "emergency",
-    "category": "new-quote",
-    "type": "policy",
-    "duration": "62",
-    "policyNumber": "HLTH-20196163",
-    "policyType": "health"
-  },
-  {
-    "status": "escalated",
-    "created": "2024-09-14T17:08:52.169Z",
-    "description": "Local agent office inquiry",
-    "priority": "low",
-    "category": "agent-request",
-    "type": "coverage",
-    "duration": "79",
-    "policyNumber": "HOME-36990457",
-    "policyType": "home"
-  },
-  {
-    "status": "resolved",
-    "created": "2024-09-13T22:13:19.012Z",
-    "description": "Suspicious claim activity",
-    "priority": "emergency",
-    "category": "fraud-report",
-    "type": "fnol",
-    "duration": "64",
-    "policyNumber": "HLTH-57574161",
-    "policyType": "health"
-  },
-  {
-    "status": "escalated",
-    "created": "2024-09-13T09:46:27.440Z",
-    "description": "Agent conduct complaint",
-    "priority": "emergency",
-    "category": "complaint",
-    "type": "policy",
-    "duration": "27",
-    "policyNumber": "HOME-36482047",
-    "policyType": "home"
-  },
-  {
-    "status": "resolved",
-    "created": "2024-09-12T19:05:40.802Z",
-    "description": "Service delay complaint",
-    "priority": "low",
-    "category": "complaint",
-    "type": "policy",
-    "duration": "83",
-    "policyNumber": "BIZ-78356501",
-    "policyType": "business"
-  },
-  {
-    "status": "escalated",
-    "created": "2024-09-12T17:56:43.055Z",
-    "description": "Online account access issues",
-    "priority": "low",
-    "category": "account-service",
-    "type": "policy",
-    "duration": "50",
-    "policyNumber": "LIFE-84947150",
-    "policyType": "life"
-  },
-  {
-    "status": "in-progress",
-    "created": "2024-09-12T17:42:31.077Z",
-    "description": "New agent assignment request",
-    "priority": "medium",
-    "category": "agent-request",
-    "type": "coverage",
-    "duration": "65",
-    "policyNumber": "AUTO-82639326",
-    "policyType": "auto"
-  },
-  {
-    "status": "escalated",
-    "created": "2024-09-11T18:48:29.514Z",
-    "description": "New auto policy quote",
-    "priority": "low",
-    "category": "new-quote",
-    "type": "emergency",
-    "duration": "24",
-    "policyNumber": "HLTH-04136094",
-    "policyType": "health"
-  },
-  {
-    "status": "escalated",
-    "created": "2024-09-10T21:12:48.561Z",
-    "description": "Add new driver to policy",
-    "priority": "medium",
-    "category": "policy-changes",
-    "type": "policy",
-    "duration": "44",
-    "policyNumber": "HOME-94971943",
-    "policyType": "home"
-  },
-  {
-    "status": "escalated",
-    "created": "2024-09-10T19:27:12.348Z",
-    "description": "Business coverage quote",
-    "priority": "low",
-    "category": "new-quote",
-    "type": "emergency",
-    "duration": "107",
-    "policyNumber": "LIFE-32287525",
-    "policyType": "life"
-  },
-  {
-    "status": "in-progress",
-    "created": "2024-09-09T09:01:35.513Z",
-    "description": "Status update request for recent claim",
-    "priority": "low",
-    "category": "claim-status",
-    "type": "fnol",
-    "duration": "105",
-    "policyNumber": "LIFE-60465133",
-    "policyType": "life"
-  },
-  {
-    "status": "resolved",
-    "created": "2024-09-09T06:41:23.701Z",
-    "description": "Single vehicle incident report",
-    "priority": "emergency",
-    "category": "accident-report",
-    "type": "emergency",
-    "duration": "17",
-    "policyNumber": "BIZ-52702144",
-    "policyType": "business"
-  },
-  {
-    "status": "in-progress",
-    "created": "2024-09-09T01:22:12.533Z",
-    "description": "Additional coverage options",
-    "priority": "emergency",
-    "category": "coverage-inquiry",
-    "type": "billing",
-    "duration": "11",
-    "policyNumber": "LIFE-84201132",
-    "policyType": "life"
-  },
-  {
-    "status": "resolved",
-    "created": "2024-09-07T22:02:11.057Z",
-    "description": "Property damage from vehicle",
-    "priority": "emergency",
-    "category": "accident-report",
-    "type": "fnol",
-    "duration": "103",
-    "policyNumber": "HLTH-78572211",
-    "policyType": "health"
-  },
-  {
-    "status": "in-progress",
-    "created": "2024-09-07T03:53:51.375Z",
-    "description": "Billing dispute",
-    "priority": "high",
-    "category": "complaint",
-    "type": "policy",
-    "duration": "36",
-    "policyNumber": "HLTH-40669295",
-    "policyType": "health"
-  },
-  {
-    "status": "resolved",
-    "created": "2024-09-06T18:49:24.882Z",
-    "description": "Policy limits inquiry",
-    "priority": "medium",
-    "category": "coverage-inquiry",
-    "type": "billing",
-    "duration": "81",
-    "policyNumber": "BIZ-61566752",
-    "policyType": "business"
-  },
-  {
-    "status": "in-progress",
-    "created": "2024-09-05T16:30:55.983Z",
-    "description": "Suspicious document submission",
-    "priority": "emergency",
-    "category": "fraud-report",
-    "type": "emergency",
-    "duration": "108",
-    "policyNumber": "AUTO-85373458",
-    "policyType": "auto"
-  },
-  {
-    "status": "resolved",
-    "created": "2024-09-05T00:29:39.708Z",
-    "description": "Life insurance quote",
-    "priority": "low",
-    "category": "new-quote",
-    "type": "billing",
-    "duration": "62",
-    "policyNumber": "LIFE-83511991",
-    "policyType": "life"
-  },
-  {
-    "status": "in-progress",
-    "created": "2024-09-02T21:35:49.474Z",
-    "description": "Suspicious document submission",
-    "priority": "low",
-    "category": "fraud-report",
-    "type": "fnol",
-    "duration": "60",
-    "policyNumber": "UMB-20282689",
-    "policyType": "umbrella"
-  },
-  {
-    "status": "resolved",
-    "created": "2024-09-02T19:48:36.322Z",
-    "description": "Premium increase inquiry",
-    "priority": "high",
-    "category": "billing",
-    "type": "emergency",
-    "duration": "63",
-    "policyNumber": "UMB-17573439",
-    "policyType": "umbrella"
-  },
-  {
-    "status": "escalated",
-    "created": "2024-09-02T12:00:44.872Z",
-    "description": "Autopay enrollment",
-    "priority": "low",
-    "category": "billing",
-    "type": "emergency",
-    "duration": "33",
-    "policyNumber": "AUTO-69834117",
-    "policyType": "auto"
-  },
-  {
-    "status": "resolved",
-    "created": "2024-09-02T10:17:26.052Z",
-    "description": "Home insurance quote request",
-    "priority": "high",
-    "category": "new-quote",
-    "type": "emergency",
-    "duration": "24",
-    "policyNumber": "LIFE-68366508",
-    "policyType": "life"
-  },
-  {
-    "status": "escalated",
-    "created": "2024-09-02T05:58:19.056Z",
-    "description": "Autopay enrollment",
-    "priority": "high",
-    "category": "billing",
-    "type": "emergency",
-    "duration": "113",
-    "policyNumber": "HOME-42115393",
-    "policyType": "home"
-  },
-  {
-    "status": "resolved",
-    "created": "2024-09-01T06:57:32.763Z",
-    "description": "International coverage inquiry",
-    "priority": "low",
-    "category": "coverage-inquiry",
-    "type": "billing",
-    "duration": "100",
-    "policyNumber": "BIZ-21107590",
-    "policyType": "business"
-  },
-  {
-    "status": "in-progress",
-    "created": "2024-09-01T03:37:34.030Z",
-    "description": "Local agent office inquiry",
-    "priority": "medium",
-    "category": "agent-request",
-    "type": "policy",
-    "duration": "6",
-    "policyNumber": "LIFE-54076905",
-    "policyType": "life"
+export const tickets: Registro[] = [
+  {
+    "id": "1",
+    "created": "2024-02-02T03:22:33",
+    "name": "Humberto Francisca Barrientos Santill\u00e1n",
+    "enrollment": "A035198677",
+    "career": "Producci\u00f3n Musical",
+    "trimester": "NI 2024 T2",
+    "status": "pendiente"
+  },
+  {
+    "id": "2",
+    "created": "2024-10-29T18:53:18",
+    "name": "Mart\u00edn Julio C\u00e9sar Ben\u00edtez",
+    "enrollment": "A034531220",
+    "career": "Ingenier\u00eda en Computaci\u00f3n",
+    "trimester": "NI 2024 T1",
+    "status": "inscrito"
+  },
+  {
+    "id": "3",
+    "created": "2024-11-20T17:17:21",
+    "name": "Mtro. Pedro Soto",
+    "enrollment": "A092927755",
+    "career": "Dise\u00f1o Interactivo",
+    "trimester": "NI 2023 T2",
+    "status": "inscrito"
+  },
+  {
+    "id": "4",
+    "created": "2024-03-06T05:53:49",
+    "name": "Horacio Leticia Ram\u00f3n",
+    "enrollment": "A019032716",
+    "career": "Programaci\u00f3n de Videojuegos",
+    "trimester": "NI 2024 T4",
+    "status": "baja"
+  },
+  {
+    "id": "5",
+    "created": "2024-02-24T20:10:08",
+    "name": "Abel Corona Melgar",
+    "enrollment": "A078837443",
+    "career": "Programaci\u00f3n de Videojuegos",
+    "trimester": "NI 2024 T4",
+    "status": "inscrito"
+  },
+  {
+    "id": "6",
+    "created": "2024-04-17T13:36:24",
+    "name": "Fabiola Alma Griego",
+    "enrollment": "A067397349",
+    "career": "Producci\u00f3n Musical",
+    "trimester": "NI 2023 T2",
+    "status": "baja"
+  },
+  {
+    "id": "7",
+    "created": "2023-07-11T18:48:48",
+    "name": "Emiliano Anel Gir\u00f3n",
+    "enrollment": "A099415145",
+    "career": "Negocios de la M\u00fasica",
+    "trimester": "NI 2024 T4",
+    "status": "baja"
+  },
+  {
+    "id": "8",
+    "created": "2024-03-08T04:51:10",
+    "name": "Estela Juan Meza Ballesteros",
+    "enrollment": "A014689410",
+    "career": "Dise\u00f1o Interactivo",
+    "trimester": "NI 2023 T3",
+    "status": "inscrito"
+  },
+  {
+    "id": "9",
+    "created": "2025-03-07T01:14:58",
+    "name": "Jacinto Elisa Maldonado",
+    "enrollment": "A027773758",
+    "career": "Producci\u00f3n Musical",
+    "trimester": "NI 2024 T4",
+    "status": "inscrito"
+  },
+  {
+    "id": "10",
+    "created": "2024-01-11T10:16:08",
+    "name": "Dr. Leonor Ruelas",
+    "enrollment": "A042263575",
+    "career": "Ingenier\u00eda en Audio",
+    "trimester": "NI 2023 T2",
+    "status": "inscrito"
+  },
+  {
+    "id": "11",
+    "created": "2023-09-19T04:18:33",
+    "name": "\u00c1ngela Lebr\u00f3n",
+    "enrollment": "A074923927",
+    "career": "Dise\u00f1o Interactivo",
+    "trimester": "NI 2023 T1",
+    "status": "pendiente"
+  },
+  {
+    "id": "12",
+    "created": "2023-09-02T15:37:53",
+    "name": "Frida Vanesa Raya",
+    "enrollment": "A025776967",
+    "career": "Ciencias de la Comunicaci\u00f3n",
+    "trimester": "NI 2023 T3",
+    "status": "baja"
+  },
+  {
+    "id": "13",
+    "created": "2023-11-04T07:42:46",
+    "name": "Gerardo Ord\u00f3\u00f1ez Rivero",
+    "enrollment": "A059195377",
+    "career": "Dise\u00f1o de Videojuegos",
+    "trimester": "NI 2024 T4",
+    "status": "baja"
+  },
+  {
+    "id": "14",
+    "created": "2023-05-05T16:23:10",
+    "name": "Eric Barrag\u00e1n",
+    "enrollment": "A091636279",
+    "career": "Programaci\u00f3n de Videojuegos",
+    "trimester": "NI 2023 T1",
+    "status": "pendiente"
+  },
+  {
+    "id": "15",
+    "created": "2023-10-11T01:49:43",
+    "name": "Federico Jon\u00e1s Espinoza",
+    "enrollment": "A069247311",
+    "career": "Programaci\u00f3n de Videojuegos",
+    "trimester": "NI 2024 T4",
+    "status": "pendiente"
+  },
+  {
+    "id": "16",
+    "created": "2024-07-07T16:29:55",
+    "name": "Silvia Mar\u00eda Cristina Corona",
+    "enrollment": "A022804277",
+    "career": "Ciencias de la Comunicaci\u00f3n",
+    "trimester": "NI 2023 T2",
+    "status": "inscrito"
+  },
+  {
+    "id": "17",
+    "created": "2024-04-28T23:47:31",
+    "name": "Sr(a). Asunci\u00f3n Mu\u00f1oz",
+    "enrollment": "A060038920",
+    "career": "Ingenier\u00eda en Audio",
+    "trimester": "NI 2023 T3",
+    "status": "baja"
+  },
+  {
+    "id": "18",
+    "created": "2024-02-29T02:37:01",
+    "name": "Rolando Delgadillo",
+    "enrollment": "A029170770",
+    "career": "Dise\u00f1o de Videojuegos",
+    "trimester": "NI 2023 T4",
+    "status": "inscrito"
+  },
+  {
+    "id": "19",
+    "created": "2025-02-01T18:35:15",
+    "name": "Javier Daniel Rojas Viera",
+    "enrollment": "A010051972",
+    "career": "Dise\u00f1o Interactivo",
+    "trimester": "NI 2024 T2",
+    "status": "pendiente"
+  },
+  {
+    "id": "20",
+    "created": "2025-03-18T03:57:18",
+    "name": "Frida Saucedo Oliv\u00e1rez",
+    "enrollment": "A011133275",
+    "career": "Producci\u00f3n Musical",
+    "trimester": "NI 2024 T1",
+    "status": "inscrito"
+  },
+  {
+    "id": "21",
+    "created": "2023-12-12T02:42:01",
+    "name": "Jes\u00fas Z\u00fa\u00f1iga",
+    "enrollment": "A075565064",
+    "career": "Ciencias de la Comunicaci\u00f3n",
+    "trimester": "NI 2023 T4",
+    "status": "pendiente"
+  },
+  {
+    "id": "22",
+    "created": "2024-05-24T14:31:39",
+    "name": "Tania Cornejo Garica",
+    "enrollment": "A028619555",
+    "career": "Ingenier\u00eda en Audio",
+    "trimester": "NI 2025 T1",
+    "status": "pendiente"
+  },
+  {
+    "id": "23",
+    "created": "2024-08-22T14:33:13",
+    "name": "Gloria Ramos",
+    "enrollment": "A043369614",
+    "career": "Negocios de la M\u00fasica",
+    "trimester": "NI 2025 T1",
+    "status": "inscrito"
+  },
+  {
+    "id": "24",
+    "created": "2024-08-19T01:57:45",
+    "name": "Camilo Gaona Zarate",
+    "enrollment": "A018279435",
+    "career": "Dise\u00f1o de Videojuegos",
+    "trimester": "NI 2024 T2",
+    "status": "pendiente"
+  },
+  {
+    "id": "25",
+    "created": "2023-12-26T04:01:14",
+    "name": "Martha Lucio",
+    "enrollment": "A047085756",
+    "career": "Producci\u00f3n Musical",
+    "trimester": "NI 2023 T1",
+    "status": "pendiente"
+  },
+  {
+    "id": "26",
+    "created": "2025-03-13T06:25:31",
+    "name": "D\u00e9bora Nicol\u00e1s Corona",
+    "enrollment": "A063782851",
+    "career": "Negocios de la M\u00fasica",
+    "trimester": "NI 2023 T2",
+    "status": "baja"
+  },
+  {
+    "id": "27",
+    "created": "2023-12-10T09:30:44",
+    "name": "Celia Luis Miguel Rodarte Zamora",
+    "enrollment": "A063031006",
+    "career": "Cine Digital",
+    "trimester": "NI 2023 T2",
+    "status": "inscrito"
+  },
+  {
+    "id": "28",
+    "created": "2024-04-07T20:41:36",
+    "name": "Guillermo Cornejo Rael",
+    "enrollment": "A029754093",
+    "career": "Cine Digital",
+    "trimester": "NI 2024 T3",
+    "status": "baja"
+  },
+  {
+    "id": "29",
+    "created": "2025-02-09T09:59:58",
+    "name": "Jos Jos\u00e9 Emilio de Le\u00f3n Mata",
+    "enrollment": "A010096608",
+    "career": "Producci\u00f3n Musical",
+    "trimester": "NI 2024 T4",
+    "status": "baja"
+  },
+  {
+    "id": "30",
+    "created": "2024-01-25T10:09:39",
+    "name": "Sessa Mar\u00eda Elena Santacruz",
+    "enrollment": "A036872329",
+    "career": "Negocios de la M\u00fasica",
+    "trimester": "NI 2024 T1",
+    "status": "inscrito"
+  },
+  {
+    "id": "31",
+    "created": "2024-05-18T21:48:14",
+    "name": "Mar\u00eda Jos\u00e9 Jos\u00e9 Carlos Casillas",
+    "enrollment": "A044144804",
+    "career": "Programaci\u00f3n de Videojuegos",
+    "trimester": "NI 2025 T1",
+    "status": "baja"
+  },
+  {
+    "id": "32",
+    "created": "2023-08-10T07:40:13",
+    "name": "Estefan\u00eda Alfredo Alem\u00e1n",
+    "enrollment": "A029504764",
+    "career": "Ingenier\u00eda en Audio",
+    "trimester": "NI 2025 T1",
+    "status": "inscrito"
+  },
+  {
+    "id": "33",
+    "created": "2023-11-21T01:06:08",
+    "name": "Mtro. Catalina Navarro",
+    "enrollment": "A043743688",
+    "career": "Dise\u00f1o de Videojuegos",
+    "trimester": "NI 2023 T4",
+    "status": "baja"
+  },
+  {
+    "id": "34",
+    "created": "2023-04-13T03:41:41",
+    "name": "Silvano Cab\u00e1n Sauceda",
+    "enrollment": "A085274365",
+    "career": "Dise\u00f1o Interactivo",
+    "trimester": "NI 2023 T1",
+    "status": "inscrito"
+  },
+  {
+    "id": "35",
+    "created": "2024-04-01T08:29:17",
+    "name": "Juan Jos\u00e9 Valadez",
+    "enrollment": "A018993923",
+    "career": "Producci\u00f3n Musical",
+    "trimester": "NI 2025 T1",
+    "status": "inscrito"
+  },
+  {
+    "id": "36",
+    "created": "2024-04-09T09:42:28",
+    "name": "Cristina Magdalena de la O Casta\u00f1eda",
+    "enrollment": "A063466868",
+    "career": "Producci\u00f3n Musical",
+    "trimester": "NI 2024 T4",
+    "status": "inscrito"
+  },
+  {
+    "id": "37",
+    "created": "2025-01-03T03:55:31",
+    "name": "Delia Vanesa Saucedo Mata",
+    "enrollment": "A039514302",
+    "career": "Ingenier\u00eda en Audio",
+    "trimester": "NI 2023 T1",
+    "status": "baja"
+  },
+  {
+    "id": "38",
+    "created": "2024-02-03T05:05:48",
+    "name": "Julio D\u00edaz Aponte",
+    "enrollment": "A022624856",
+    "career": "Cine Digital",
+    "trimester": "NI 2024 T4",
+    "status": "pendiente"
+  },
+  {
+    "id": "39",
+    "created": "2023-06-06T00:07:12",
+    "name": "Homero Carla Badillo",
+    "enrollment": "A096641284",
+    "career": "Dise\u00f1o de Videojuegos",
+    "trimester": "NI 2024 T3",
+    "status": "pendiente"
+  },
+  {
+    "id": "40",
+    "created": "2025-01-10T01:57:59",
+    "name": "Martha Carrero Ochoa",
+    "enrollment": "A060692235",
+    "career": "Ingenier\u00eda en Computaci\u00f3n",
+    "trimester": "NI 2023 T4",
+    "status": "inscrito"
+  },
+  {
+    "id": "41",
+    "created": "2023-09-21T03:10:52",
+    "name": "Yeni Cristina Quintero",
+    "enrollment": "A049768722",
+    "career": "Dise\u00f1o de Videojuegos",
+    "trimester": "NI 2023 T1",
+    "status": "pendiente"
+  },
+  {
+    "id": "42",
+    "created": "2024-05-12T16:01:00",
+    "name": "Abril T\u00f3rrez Portillo",
+    "enrollment": "A048928015",
+    "career": "Negocios de la M\u00fasica",
+    "trimester": "NI 2025 T1",
+    "status": "inscrito"
+  },
+  {
+    "id": "43",
+    "created": "2023-07-12T00:03:40",
+    "name": "Conchita Luis Su\u00e1rez Ni\u00f1o",
+    "enrollment": "A086863576",
+    "career": "Programaci\u00f3n de Videojuegos",
+    "trimester": "NI 2023 T3",
+    "status": "baja"
+  },
+  {
+    "id": "44",
+    "created": "2023-08-29T01:23:19",
+    "name": "Esteban Eduardo Monta\u00f1ez Baca",
+    "enrollment": "A081480554",
+    "career": "Animaci\u00f3n y Efectos Visuales",
+    "trimester": "NI 2025 T1",
+    "status": "inscrito"
+  },
+  {
+    "id": "45",
+    "created": "2023-05-29T20:56:06",
+    "name": "Clemente Gabriel Zepeda Alcaraz",
+    "enrollment": "A069072282",
+    "career": "Programaci\u00f3n de Videojuegos",
+    "trimester": "NI 2024 T4",
+    "status": "inscrito"
+  },
+  {
+    "id": "46",
+    "created": "2023-05-12T19:59:48",
+    "name": "Yuridia Marco Antonio Pulido",
+    "enrollment": "A069469766",
+    "career": "Negocios de la M\u00fasica",
+    "trimester": "NI 2023 T3",
+    "status": "pendiente"
+  },
+  {
+    "id": "47",
+    "created": "2023-08-17T18:18:51",
+    "name": "Ver\u00f3nica Pi\u00f1a",
+    "enrollment": "A025325644",
+    "career": "Ingenier\u00eda en Audio",
+    "trimester": "NI 2023 T3",
+    "status": "baja"
+  },
+  {
+    "id": "48",
+    "created": "2024-05-10T01:47:13",
+    "name": "Humberto Paulina B\u00e1ez Salcido",
+    "enrollment": "A031962075",
+    "career": "Ciencias de la Comunicaci\u00f3n",
+    "trimester": "NI 2025 T1",
+    "status": "pendiente"
+  },
+  {
+    "id": "49",
+    "created": "2024-09-29T04:46:43",
+    "name": "Gonzalo Aida de la Cr\u00faz",
+    "enrollment": "A046124674",
+    "career": "Dise\u00f1o Interactivo",
+    "trimester": "NI 2024 T3",
+    "status": "inscrito"
+  },
+  {
+    "id": "50",
+    "created": "2023-11-11T09:26:45",
+    "name": "Mtro. Paola Garc\u00eda",
+    "enrollment": "A023915839",
+    "career": "Ciencias de la Comunicaci\u00f3n",
+    "trimester": "NI 2024 T1",
+    "status": "baja"
   }
 ];

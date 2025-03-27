@@ -60,7 +60,7 @@ export function Filterbar({
           </Button>
         )}
       </div>
-      <div className="flex items-center gap-2.5">
+      {/* <div className="flex items-center gap-2.5">
         <Switch
           size="small"
           id="registered"
@@ -73,7 +73,7 @@ export function Filterbar({
         >
           Registered agents only
         </Label>
-      </div>
+      </div> */}
     </div>
   )
 }

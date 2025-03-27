@@ -1,31 +1,27 @@
-import { Badge } from "@/components/Badge"
-import { Ticket } from "@/data/support/schema"
-import { cx } from "@/lib/utils"
-import {
-  RiAlarmWarningLine,
-  RiFileCheckLine,
-  RiFileListLine,
-  RiFolderReduceLine,
-} from "@remixicon/react"
-import { ColumnDef } from "@tanstack/react-table"
+import { Badge } from "@/components/Badge";
+import { ColumnDef } from "@tanstack/react-table";
 
-const typeIconMapping: Record<string, React.ElementType> = {
-  "fnol-contact": RiFolderReduceLine,
-  "policy-contact": RiFileListLine,
-  "claims-contact": RiFileCheckLine,
-  "emergency-contact": RiAlarmWarningLine,
-}
+type Registro = {
+  id: string;
+  created: string;
+  name: string;
+  enrollment: string;
+  career: string;
+  trimester: string;
+  status: "inscrito" | "pendiente" | "baja";
+};
 
 export const columns = [
   {
     header: "Creado el día",
     accessorKey: "created",
     meta: {
+      displayName: "Creado el día",
       className: "text-left",
     },
     cell: ({ row }) => (
       <>
-        {new Date(row.original.created).toLocaleDateString("en-GB", {
+        {new Date(row.original.created).toLocaleDateString("es-MX", {
           day: "2-digit",
           month: "2-digit",
           year: "numeric",
@@ -37,101 +33,61 @@ export const columns = [
   },
   {
     header: "Nombre",
-    accessorKey: "description",
+    accessorKey: "name",
     meta: {
+      displayName: "Nombre",
       className: "text-left",
       cell: "font-medium text-gray-900 dark:text-gray-50",
     },
   },
   {
     header: "Matrícula",
-    accessorKey: "policyNumber",
+    accessorKey: "enrollment",
     meta: {
+      displayName: "Matrícula",
       className: "text-left",
       cell: "font-medium",
     },
   },
   {
     header: "Carrera",
-    accessorKey: "type",
+    accessorKey: "career",
     meta: {
+      displayName: "Carrera",
       className: "text-left",
-    },
-    cell: ({ row }) => {
-      const Icon = typeIconMapping[row.original.type]
-      return (
-        <div className="flex items-center gap-2">
-          {Icon && <Icon className="size-4 shrink-0" aria-hidden="true" />}
-          <span className="capitalize">
-            {row.original.type.replace("-contact", "")}
-          </span>
-        </div>
-      )
     },
   },
   {
     header: "Trimestre",
-    accessorKey: "duration",
+    accessorKey: "trimester",
     meta: {
-      className: "text-right",
-    },
-    cell: ({ row }) => {
-      const DurationCell = (props: { minutes: string | null }) => {
-        if (props.minutes === null) return null
-        const mins = parseInt(props.minutes)
-        const hours = Math.floor(mins / 60)
-        const remainingMins = mins % 60
-
-        return (
-          <span className="ml-auto text-gray-600 dark:text-gray-300">
-            {hours > 0 ? `${hours}h ` : ""}
-            {remainingMins}m
-          </span>
-        )
-      }
-      return (
-        <div className="flex items-center gap-2">
-          <DurationCell minutes={row.original.duration} />
-        </div>
-      )
+      displayName: "Trimestre",
+      className: "text-left",
     },
   },
   {
     header: "Status",
-    accessorKey: "priority",
+    accessorKey: "status",
     meta: {
+      displayName: "Estatus",
       className: "text-left",
     },
-    cell: ({ row }) => (
-      <Badge
-        variant="neutral"
-        className="gap-1.5 font-normal capitalize text-gray-700 dark:text-gray-300"
-      >
-        <span
-          className={cx(
-            "size-2 shrink-0 rounded-sm",
-            "bg-gray-500 dark:bg-gray-500",
-            {
-              "bg-emerald-600 dark:bg-emerald-400":
-                row.original.priority === "low",
-            },
-            {
-              "bg-gray-500 dark:bg-gray-500":
-                row.original.priority === "medium",
-            },
-            {
-              "bg-orange-500 dark:bg-orange-500":
-                row.original.priority === "high",
-            },
-            {
-              "bg-red-500 dark:bg-red-500":
-                row.original.priority === "emergency",
-            },
-          )}
-          aria-hidden="true"
-        />
-        {row.original.priority}
-      </Badge>
-    ),
+    cell: ({ row }) => {
+      const value = row.original.status;
+      const color =
+        value === "inscrito"
+          ? "bg-emerald-600 dark:bg-emerald-400"
+          : value === "pendiente"
+          ? "bg-gray-500 dark:bg-gray-500"
+          : "bg-red-500 dark:bg-red-500";
+
+      return (
+        <div className="flex items-center gap-2 font-medium capitalize text-gray-800 dark:text-gray-300">
+          <span className={`size-2 shrink-0 rounded-sm ${color}`} />
+          {value}
+        </div>
+      );
+    },
   },
-] as ColumnDef<Ticket>[]
+] satisfies ColumnDef<Registro>[];
+
