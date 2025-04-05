@@ -1,79 +1,84 @@
-import { Badge } from "@/components/Badge";
 import { ColumnDef } from "@tanstack/react-table";
 
-type Registro = {
-  id: string;
-  created: string;
-  name: string;
-  enrollment: string;
-  career: string;
-  trimester: string;
-  status: "inscrito" | "pendiente" | "baja";
+export type ProspectoRow = {
+  NOMBRES: string;
+  APELLIDO_PATERNO: string;
+  APELLIDO_MATERNO: string;
+  CALLE: string;
+  NÚMERO: string;
+  CP: string;
+  COLONIA: string;
+  ESTADO: string;
+  MUNICIPIO: string;
+  CARRERA: string;
+  PERIODO: string;
+  ESTATUS: string;
+  MATRICULA: string;
 };
 
-export const columns = [
+export const columns: ColumnDef<ProspectoRow>[] = [
   {
-    header: "Creado el día",
-    accessorKey: "created",
-    meta: {
-      displayName: "Creado el día",
-      className: "text-left",
-    },
-    cell: ({ row }) => (
-      <>
-        {new Date(row.original.created).toLocaleDateString("es-MX", {
-          day: "2-digit",
-          month: "2-digit",
-          year: "numeric",
-          hour: "2-digit",
-          minute: "2-digit",
-        })}
-      </>
-    ),
+    header: "NOMBRES",
+    accessorKey: "NOMBRES",
+    meta: { displayName: "NOMBRES", className: "text-left" },
   },
   {
-    header: "Nombre",
-    accessorKey: "name",
-    meta: {
-      displayName: "Nombre",
-      className: "text-left",
-      cell: "font-medium text-gray-900 dark:text-gray-50",
-    },
+    header: "APELLIDO PATERNO",
+    accessorKey: "APELLIDO_PATERNO",
+    meta: { displayName: "APELLIDO PATERNO", className: "text-left" },
   },
   {
-    header: "Matrícula",
-    accessorKey: "enrollment",
-    meta: {
-      displayName: "Matrícula",
-      className: "text-left",
-      cell: "font-medium",
-    },
+    header: "APELLIDO MATERNO",
+    accessorKey: "APELLIDO_MATERNO",
+    meta: { displayName: "APELLIDO MATERNO", className: "text-left" },
   },
   {
-    header: "Carrera",
-    accessorKey: "career",
-    meta: {
-      displayName: "Carrera",
-      className: "text-left",
-    },
+    header: "CALLE",
+    accessorKey: "CALLE",
+    meta: { displayName: "CALLE", className: "text-left" },
   },
   {
-    header: "Trimestre",
-    accessorKey: "trimester",
-    meta: {
-      displayName: "Trimestre",
-      className: "text-left",
-    },
+    header: "NÚMERO",
+    accessorKey: "NÚMERO",
+    meta: { displayName: "NÚMERO", className: "text-left" },
   },
   {
-    header: "Status",
-    accessorKey: "status",
-    meta: {
-      displayName: "Estatus",
-      className: "text-left",
-    },
+    header: "CÓDIGO POSTAL",
+    accessorKey: "CP",
+    meta: { displayName: "CÓDIGO POSTAL", className: "text-left" },
+  },
+  {
+    header: "COLONIA",
+    accessorKey: "COLONIA",
+    meta: { displayName: "COLONIA", className: "text-left" },
+  },
+  {
+    header: "ESTADO",
+    accessorKey: "ESTADO",
+    meta: { displayName: "ESTADO", className: "text-left" },
+  },
+  {
+    header: "MUNICIPIO",
+    accessorKey: "MUNICIPIO",
+    meta: { displayName: "MUNICIPIO", className: "text-left" },
+  },
+  {
+    header: "CARRERA",
+    accessorKey: "CARRERA",
+    meta: { displayName: "CARRERA", className: "text-left" },
+  },
+  {
+    header: "PERIODO",
+    accessorKey: "PERIODO",
+    meta: { displayName: "PERIODO", className: "text-left" },
+  },
+  {
+    header: "ESTATUS",
+    accessorKey: "ESTATUS",
+    meta: { displayName: "ESTATUS", className: "text-left" },
     cell: ({ row }) => {
-      const value = row.original.status;
+      const raw = row.original.ESTATUS.toLowerCase();
+      const value = raw === "nuin" ? "inscrito" : raw;
       const color =
         value === "inscrito"
           ? "bg-emerald-600 dark:bg-emerald-400"
@@ -89,5 +94,9 @@ export const columns = [
       );
     },
   },
-] satisfies ColumnDef<Registro>[];
-
+  {
+    header: "MATRÍCULA",
+    accessorKey: "MATRICULA",
+    meta: { displayName: "MATRÍCULA", className: "text-left" },
+  },
+];

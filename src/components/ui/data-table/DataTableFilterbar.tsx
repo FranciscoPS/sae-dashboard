@@ -46,7 +46,7 @@ export function Filterbar({
           ref={searchInputRef}
           className="w-full sm:w-96"
           type="search"
-          placeholder="Search all columns..."
+          placeholder="Buscar..."
           value={searchTerm ?? ""}
           onChange={handleSearchChange}
         />
