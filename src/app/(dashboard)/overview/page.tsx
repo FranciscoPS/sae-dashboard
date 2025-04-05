@@ -269,8 +269,6 @@ export default function OverviewDashboard() {
           </div>
         </Card>
       </dl>
-
-      <DataTable data={tickets} columns={columns} />
     </main>
   );
 }
