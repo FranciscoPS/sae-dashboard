@@ -9,25 +9,32 @@ import { ProgressCircle } from "@/components/ProgressCircle";
 import { DataTable } from "@/components/ui/data-table-support/DataTable";
 import { columns } from "@/components/ui/data-table-support/columns";
 import { tickets } from "@/data/support/tickets";
-import { volume } from "@/data/support/volume";
 import { RiAddLine } from "@remixicon/react";
 import React, { useEffect, useState } from "react";
 import { db } from "../../../firebase/config";
 import { collection, getDocs } from "firebase/firestore";
+import { mockProspectos } from "@/data/MockProspectos"; // 👈 nuevo mock
 
-type CarreraData = {
-  id: string;
-  Carrera?: string;
-  Siglas?: string;
-  [key: string]: string | undefined;
+type Prospecto = {
+  NOMBRES: string;
+  APELLIDO_PATERNO: string;
+  APELLIDO_MATERNO: string;
+  CALLE: string;
+  NÚMERO: string;
+  CP: string;
+  COLONIA: string;
+  ESTADO: string;
+  MUNICIPIO: string;
+  CARRERA: string;
+  PERIODO: string;
+  ESTATUS: string;
+  MATRICULA: string;
 };
 
 export default function OverviewDashboard() {
-  const trimestreActual = "NI 2024 T4";
-  const [carreras, setCarreras] = useState<CarreraData[]>([]);
-  const [volumen, setVolumen] = useState([
-    { time: "Actual", Today: 0, Yesterday: 0 },
-  ]);
+  const [selectedPeriodo, setSelectedPeriodo] = useState("");
+  const [periodos, setPeriodos] = useState<string[]>([]);
+
   const [resumen, setResumen] = useState({
     total: 0,
     inscritos: 0,
@@ -39,61 +46,51 @@ export default function OverviewDashboard() {
   });
 
   useEffect(() => {
-    const niHistorialRef = collection(db, "carreras");
+    // Extraer periodos únicos
+    const periodosUnicos = Array.from(
+      new Set(mockProspectos.map((p) => p.PERIODO))
+    ).filter((p) => p.trim() !== "");
 
-    getDocs(niHistorialRef).then((response) => {
-      const data: CarreraData[] = response.docs.map((doc) => ({
-        ...doc.data(),
-        id: doc.id,
-      }));
-      setCarreras(data);
+    setPeriodos(periodosUnicos);
 
-      let total = 0;
-      let inscritos = 0;
-      let pendientes = 0;
-      let bajas = 0;
-
-      //TODO: Obtener lógica de inscritos, bajas y pendientes real
-      data.forEach((entry) => {
-        const raw = entry[trimestreActual];
-        const value = raw ? parseInt(raw) : 0;
-        total += value;
-
-        if (value >= 30) inscritos += value;
-        else if (value >= 10) pendientes += value;
-        else bajas += value;
-      });
-
-      const porcentaje = (v: number) =>
-        total > 0 ? Math.round((v / total) * 100) : 0;
-
-      setResumen({
-        total,
-        inscritos,
-        pendientes,
-        bajas,
-        porcentajeInscritos: porcentaje(inscritos),
-        porcentajePendientes: porcentaje(pendientes),
-        porcentajeBajas: porcentaje(bajas),
-      });
-
-      // Para el gráfico de volumen
-      const trimestreAnterior = "NI 2024 T3";
-
-      const newVolume = data.map((entry) => {
-        const todayRaw = entry[trimestreActual] as string | undefined;
-        const yesterdayRaw = entry[trimestreAnterior] as string | undefined;
-
-        return {
-          time: entry.Siglas || entry.Carrera || entry.id,
-          Today: todayRaw ? parseInt(todayRaw) : 0,
-          Yesterday: yesterdayRaw ? parseInt(yesterdayRaw) : 0,
-        };
-      });
-
-      setVolumen(newVolume);
-    });
+    // Selecciona el primero por defecto
+    if (periodosUnicos.length > 0) {
+      setSelectedPeriodo((prev) => prev || periodosUnicos[0]);
+    }
   }, []);
+
+  useEffect(() => {
+    if (!selectedPeriodo) return;
+
+    const data: Prospecto[] = mockProspectos.filter(
+      (item) => item.PERIODO === selectedPeriodo
+    );
+
+    let total = data.length;
+    let inscritos = 0;
+    let pendientes = 0;
+    let bajas = 0;
+
+    data.forEach((item) => {
+      const estatus = item.ESTATUS.toUpperCase();
+      if (estatus === "NUIN") inscritos++;
+      else if (estatus === "PENDIENTE") pendientes++;
+      else if (estatus === "BAJA") bajas++;
+    });
+
+    const porcentaje = (v: number) =>
+      total > 0 ? Math.round((v / total) * 100) : 0;
+
+    setResumen({
+      total,
+      inscritos,
+      pendientes,
+      bajas,
+      porcentajeInscritos: porcentaje(inscritos),
+      porcentajePendientes: porcentaje(pendientes),
+      porcentajeBajas: porcentaje(bajas),
+    });
+  }, [selectedPeriodo]);
 
   return (
     <main>
@@ -106,10 +103,33 @@ export default function OverviewDashboard() {
             Información y estadísticas de ingresos trimestrales
           </p>
         </div>
-        <Button className="flex items-center gap-2 text-base sm:text-sm">
-          Cargar datos
-          <RiAddLine className="-mr-0.5 size-5 shrink-0" aria-hidden="true" />
-        </Button>
+        <div className="flex w-full flex-col gap-7 sm:flex-row sm:items-center sm:justify-end">
+          <div className="flex items-center gap-4">
+            <label
+              htmlFor="periodo"
+              className="text-sm font-medium text-gray-900 dark:text-gray-50"
+            >
+              Periodo
+            </label>
+            <select
+              id="periodo"
+              value={selectedPeriodo}
+              onChange={(e) => setSelectedPeriodo(e.target.value)}
+              className="rounded-md border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 px-4 py-2 text-sm text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              {periodos.map((periodo) => (
+                <option key={periodo} value={periodo}>
+                  {periodo}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <Button className="flex items-center gap-2 text-base sm:text-sm">
+            Cargar datos
+            <RiAddLine className="-mr-0.5 size-5 shrink-0" aria-hidden="true" />
+          </Button>
+        </div>
       </div>
 
       <Divider />
@@ -117,7 +137,7 @@ export default function OverviewDashboard() {
       <dl className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
         <Card>
           <dt className="text-sm font-medium text-gray-900 dark:text-gray-50">
-            Trimestre actual {trimestreActual}
+            Prospectos totales
           </dt>
           <dd className="mt-1 text-3xl font-semibold text-gray-900 dark:text-gray-50">
             {resumen.total} prospectos
@@ -138,43 +158,34 @@ export default function OverviewDashboard() {
           >
             <li>
               <span className="text-base font-semibold text-gray-900 dark:text-gray-50">
-                {resumen.porcentajeInscritos}%
+                {resumen.inscritos} ({resumen.porcentajeInscritos}%)
               </span>
               <div className="flex items-center gap-2">
-                <span
-                  className="size-2.5 shrink-0 rounded-sm bg-blue-500 dark:bg-blue-500"
-                  aria-hidden="true"
-                />
-                <span className="text-sm">Inscritos</span>
+                <span className="size-2.5 shrink-0 rounded-sm bg-blue-500" />
+                <span>Inscritos</span>
               </div>
             </li>
             <li>
               <span className="text-base font-semibold text-gray-900 dark:text-gray-50">
-                {resumen.porcentajePendientes}%
+                {resumen.pendientes} ({resumen.porcentajePendientes}%)
               </span>
               <div className="flex items-center gap-2">
-                <span
-                  className="size-2.5 shrink-0 rounded-sm bg-gray-400 dark:bg-gray-600"
-                  aria-hidden="true"
-                />
-                <span className="text-sm">Pendientes</span>
+                <span className="size-2.5 shrink-0 rounded-sm bg-gray-500" />
+                <span>Pendientes</span>
               </div>
             </li>
             <li>
               <span className="text-base font-semibold text-gray-900 dark:text-gray-50">
-                {resumen.porcentajeBajas}%
+                {resumen.bajas} ({resumen.porcentajeBajas}%)
               </span>
               <div className="flex items-center gap-2">
-                <span
-                  className="size-2.5 shrink-0 rounded-sm bg-orange-500 dark:bg-orange-500"
-                  aria-hidden="true"
-                />
-                <span className="text-sm">Bajas</span>
+                <span className="size-2.5 shrink-0 rounded-sm bg-amber-500" />
+                <span>Bajas</span>
               </div>
             </li>
           </ul>
         </Card>
-
+        {/* 
         <Card>
           <dt className="text-sm font-medium text-gray-900 dark:text-gray-50">
             Prospectos incritos
@@ -249,7 +260,7 @@ export default function OverviewDashboard() {
               showLegend={false}
             />
           </div>
-        </Card>
+        </Card> */}
       </dl>
 
       <DataTable data={tickets} columns={columns} />
