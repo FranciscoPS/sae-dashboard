@@ -14,6 +14,7 @@ import React, { useEffect, useState } from "react";
 import { db } from "../../../firebase/config";
 import { collection, getDocs } from "firebase/firestore";
 import { mockProspectos } from "@/data/MockProspectos"; // 👈 nuevo mock
+import { DonutChart } from "@/components/DonutChart";
 
 type Prospecto = {
   NOMBRES: string;
@@ -185,6 +186,67 @@ export default function OverviewDashboard() {
             </li>
           </ul>
         </Card>
+
+        <Card>
+          <dt className="text-sm font-medium text-gray-900 dark:text-gray-50">
+            Distribución por estatus
+          </dt>
+          <div className="mt-4 flex flex-wrap items-center justify-between gap-8">
+            <div className="space-y-2 text-sm">
+              <div className="flex items-center gap-2">
+                <span className="size-2.5 shrink-0 rounded-sm bg-blue-500" />
+                <span>
+                  Inscritos:{" "}
+                  <span className="font-semibold">
+                    {resumen.porcentajeInscritos}%
+                  </span>
+                </span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="size-2.5 shrink-0 rounded-sm bg-gray-500" />
+                <span>
+                  Pendientes:{" "}
+                  <span className="font-semibold">
+                    {resumen.porcentajePendientes}%
+                  </span>
+                </span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="size-2.5 shrink-0 rounded-sm bg-amber-500" />
+                <span>
+                  Bajas:{" "}
+                  <span className="font-semibold">
+                    {resumen.porcentajeBajas}%
+                  </span>
+                </span>
+              </div>
+            </div>
+
+            <DonutChart
+              data={[
+                {
+                  name: "Inscritos",
+                  amount: resumen.inscritos,
+                },
+                {
+                  name: "Pendientes",
+                  amount: resumen.pendientes,
+                },
+                {
+                  name: "Bajas",
+                  amount: resumen.bajas,
+                },
+              ]}
+              colors={["blue", "gray", "amber"]}
+              category="name"
+              value="amount"
+              valueFormatter={(number: number) =>
+                `${Intl.NumberFormat("es-MX").format(number)}`
+              }
+            />
+          </div>
+        </Card>
+
         {/* 
         <Card>
           <dt className="text-sm font-medium text-gray-900 dark:text-gray-50">
