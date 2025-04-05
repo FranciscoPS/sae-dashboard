@@ -1,20 +1,17 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { Button } from "@/components/Button";
 import { Card } from "@/components/Card";
 import { CategoryBar } from "@/components/CategoryBar";
 import { Divider } from "@/components/Divider";
-import { LineChartSupport } from "@/components/LineChartSupport";
-import { ProgressCircle } from "@/components/ProgressCircle";
 import { DataTable } from "@/components/ui/data-table-support/DataTable";
 import { columns } from "@/components/ui/data-table-support/columns";
 import { tickets } from "@/data/support/tickets";
-import { RiAddLine } from "@remixicon/react";
-import React, { useEffect, useState } from "react";
-import { db } from "../../../firebase/config";
-import { collection, getDocs } from "firebase/firestore";
-import { mockProspectos } from "@/data/MockProspectos"; // 👈 nuevo mock
 import { DonutChart } from "@/components/DonutChart";
+import { BarChart } from "@/components/BarChart";
+import { RiAddLine } from "@remixicon/react";
+import { mockProspectos } from "@/data/MockProspectos";
 
 type Prospecto = {
   NOMBRES: string;
@@ -35,6 +32,7 @@ type Prospecto = {
 export default function OverviewDashboard() {
   const [selectedPeriodo, setSelectedPeriodo] = useState("");
   const [periodos, setPeriodos] = useState<string[]>([]);
+  const [barChartData, setBarChartData] = useState<any[]>([]);
 
   const [resumen, setResumen] = useState({
     total: 0,
@@ -47,14 +45,11 @@ export default function OverviewDashboard() {
   });
 
   useEffect(() => {
-    // Extraer periodos únicos
     const periodosUnicos = Array.from(
       new Set(mockProspectos.map((p) => p.PERIODO))
     ).filter((p) => p.trim() !== "");
 
     setPeriodos(periodosUnicos);
-
-    // Selecciona el primero por defecto
     if (periodosUnicos.length > 0) {
       setSelectedPeriodo((prev) => prev || periodosUnicos[0]);
     }
@@ -91,6 +86,27 @@ export default function OverviewDashboard() {
       porcentajePendientes: porcentaje(pendientes),
       porcentajeBajas: porcentaje(bajas),
     });
+
+    const carrerasUnicas = Array.from(new Set(data.map((d) => d.CARRERA)));
+    const chart = carrerasUnicas.map((carrera) => {
+      const inscritos = data.filter(
+        (d) => d.CARRERA === carrera && d.ESTATUS.toUpperCase() === "NUIN"
+      ).length;
+      const pendientes = data.filter(
+        (d) => d.CARRERA === carrera && d.ESTATUS.toUpperCase() === "PENDIENTE"
+      ).length;
+      const bajas = data.filter(
+        (d) => d.CARRERA === carrera && d.ESTATUS.toUpperCase() === "BAJA"
+      ).length;
+      return {
+        name: carrera,
+        Inscritos: inscritos,
+        Pendientes: pendientes,
+        Bajas: bajas,
+      };
+    });
+
+    setBarChartData(chart);
   }, [selectedPeriodo]);
 
   return (
@@ -135,7 +151,7 @@ export default function OverviewDashboard() {
 
       <Divider />
 
-      <dl className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <dl className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 justify-center">
         <Card>
           <dt className="text-sm font-medium text-gray-900 dark:text-gray-50">
             Prospectos totales
@@ -153,10 +169,7 @@ export default function OverviewDashboard() {
             colors={["blue", "gray", "amber"]}
             showLabels={false}
           />
-          <ul
-            role="list"
-            className="mt-4 flex flex-wrap gap-x-10 gap-y-4 text-sm"
-          >
+          <ul className="mt-4 flex flex-wrap gap-x-10 gap-y-4 text-sm">
             <li>
               <span className="text-base font-semibold text-gray-900 dark:text-gray-50">
                 {resumen.inscritos} ({resumen.porcentajeInscritos}%)
@@ -224,18 +237,9 @@ export default function OverviewDashboard() {
 
             <DonutChart
               data={[
-                {
-                  name: "Inscritos",
-                  amount: resumen.inscritos,
-                },
-                {
-                  name: "Pendientes",
-                  amount: resumen.pendientes,
-                },
-                {
-                  name: "Bajas",
-                  amount: resumen.bajas,
-                },
+                { name: "Inscritos", amount: resumen.inscritos },
+                { name: "Pendientes", amount: resumen.pendientes },
+                { name: "Bajas", amount: resumen.bajas },
               ]}
               colors={["blue", "gray", "amber"]}
               category="name"
@@ -247,82 +251,23 @@ export default function OverviewDashboard() {
           </div>
         </Card>
 
-        {/* 
-        <Card>
+        <Card className="col-span-2 lg:col-span-3">
           <dt className="text-sm font-medium text-gray-900 dark:text-gray-50">
-            Prospectos incritos
+            Comparativo por carrera ({selectedPeriodo})
           </dt>
-          <div className="mt-4 flex flex-nowrap items-center justify-between gap-y-4">
-            <dd className="space-y-3">
-              <div>
-                <div className="flex items-center gap-2">
-                  <span
-                    className="size-2.5 shrink-0 rounded-sm bg-blue-500 dark:bg-blue-500"
-                    aria-hidden="true"
-                  />
-                  <span className="text-sm">Alumnos inscritos</span>
-                </div>
-                <span className="mt-1 block text-2xl font-semibold text-gray-900 dark:text-gray-50">
-                  {resumen.porcentajeInscritos}%
-                </span>
-              </div>
-            </dd>
-            <ProgressCircle
-              value={resumen.porcentajeInscritos}
-              radius={45}
-              strokeWidth={7}
+          <div className="mt-6">
+            <BarChart
+              data={barChartData}
+              index="name"
+              categories={["Inscritos", "Pendientes", "Bajas"]}
+              colors={["blue", "gray", "amber"]}
+              valueFormatter={(number: number) =>
+                Intl.NumberFormat("es-MX").format(number)
+              }
+              yAxisWidth={48}
             />
           </div>
         </Card>
-
-        <Card>
-          <dt className="text-sm font-medium text-gray-900 dark:text-gray-50">
-            Volumen de inscripciones
-          </dt>
-          <div className="mt-4 flex items-center gap-x-8 gap-y-4">
-            <dd className="space-y-3 whitespace-nowrap">
-              <div>
-                <div className="flex items-center gap-2">
-                  <span
-                    className="size-2.5 shrink-0 rounded-sm bg-blue-500 dark:bg-blue-500"
-                    aria-hidden="true"
-                  />
-                  <span className="text-sm">Trimestre 2025-1</span>
-                </div>
-                <span className="mt-1 block text-2xl font-semibold text-gray-900 dark:text-gray-50">
-                  {resumen.total}
-                </span>
-              </div>
-              <div>
-                <div className="flex items-center gap-2">
-                  <span
-                    className="size-2.5 shrink-0 rounded-sm bg-gray-400 dark:bg-gray-600"
-                    aria-hidden="true"
-                  />
-                  <span className="text-sm">Trimestre 2024-4</span>
-                </div>
-                <span className="mt-1 block text-2xl font-semibold text-gray-900 dark:text-gray-50">
-                  {resumen.total + 10}
-                </span>
-              </div>
-            </dd>
-
-            <LineChartSupport
-              className="h-28"
-              data={volumen} // este es el nuevo
-              index="time"
-              categories={["Today", "Yesterday"]}
-              colors={["blue", "gray"]}
-              showTooltip={false}
-              valueFormatter={(number: number) =>
-                Intl.NumberFormat("us").format(number).toString()
-              }
-              startEndOnly={true}
-              showYAxis={false}
-              showLegend={false}
-            />
-          </div>
-        </Card> */}
       </dl>
 
       <DataTable data={tickets} columns={columns} />
