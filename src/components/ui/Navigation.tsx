@@ -37,6 +37,13 @@ function Navigation() {
           >
             <Link href="/tables">Tabla de prospectos</Link>
           </TabNavigationLink>
+          <TabNavigationLink
+            className="inline-flex gap-2"
+            asChild
+            active={pathname === "/tracker"}
+          >
+            <Link href="/tracker">Status de Servicio</Link>
+          </TabNavigationLink>
         </div>
       </TabNavigation>
     </div>

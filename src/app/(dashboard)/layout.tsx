@@ -1,6 +1,5 @@
 import { Navigation } from "@/components/ui/Navigation";
 
-// filepath: /c:/Users/PC/Source/Repos/sae-dashboard/src/app/dashboard/layout.tsx
 export default function RootLayout({
   children,
 }: Readonly<{

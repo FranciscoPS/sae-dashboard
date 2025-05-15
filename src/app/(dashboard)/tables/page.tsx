@@ -1,6 +1,5 @@
 "use client";
 
-import { useMemo } from "react";
 import { Divider } from "@/components/Divider";
 import { DataTable } from "@/components/ui/data-table/DataTable";
 import { mockProspectos } from "@/data/MockProspectos";

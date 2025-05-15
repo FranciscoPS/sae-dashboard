@@ -5,6 +5,7 @@ import { BarList } from "@/components/BarList";
 import { Card } from "@/components/Card";
 import { Divider } from "@/components/Divider";
 import { DonutChart } from "@/components/DonutChart";
+import { Tracker } from "@/components/Tracker";
 
 const chartdata = [
   {
@@ -78,6 +79,7 @@ const data = [
 export default function Graphs() {
   return (
     <main>
+
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-2xl font-semibold text-gray-900 dark:text-gray-50">
